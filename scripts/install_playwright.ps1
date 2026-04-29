@@ -63,26 +63,26 @@ try {
         }
     }
     
-    # Install Playwright browsers
+    # Install Playwright browsers using npm exec
     Write-Log "Running: npx playwright install $Browsers"
     
-    $installArgs = @("playwright", "install")
-    
-    if ($Browsers -eq "all") {
-        # Install all browsers
-        Write-Log "Installing all Playwright browsers..."
-    } else {
-        # Install specific browser
-        $installArgs += $Browsers
-    }
-    
-    # Add --with-deps flag for system dependencies (if needed)
-    # $installArgs += "--with-deps"
-    
-    $process = Start-Process -FilePath "npx" -ArgumentList $installArgs -Wait -PassThru -NoNewWindow
-    
-    if ($process.ExitCode -ne 0) {
-        Write-Log "Playwright installation failed with exit code: $($process.ExitCode)" "ERROR"
+    try {
+        if ($Browsers -eq "all") {
+            # Install all browsers
+            Write-Log "Installing all Playwright browsers..."
+            & npx --yes playwright install
+        } else {
+            # Install specific browser
+            Write-Log "Installing Playwright $Browsers browser..."
+            & npx --yes playwright install $Browsers
+        }
+        
+        if ($LASTEXITCODE -ne 0) {
+            Write-Log "Playwright installation failed with exit code: $LASTEXITCODE" "ERROR"
+            exit 1
+        }
+    } catch {
+        Write-Log "Playwright installation failed: $_" "ERROR"
         exit 1
     }
     
@@ -91,8 +91,10 @@ try {
     # Verify installation
     Write-Log "Verifying Playwright installation..."
     try {
-        $playwrightVersion = npx playwright --version 2>&1
-        Write-Log "Playwright version: $playwrightVersion" "SUCCESS"
+        $playwrightVersion = & npx --yes playwright --version 2>&1
+        if ($LASTEXITCODE -eq 0) {
+            Write-Log "Playwright version: $playwrightVersion" "SUCCESS"
+        }
     } catch {
         Write-Log "Warning: Could not verify Playwright version" "WARN"
     }
@@ -100,7 +102,7 @@ try {
     # Test Playwright MCP
     Write-Log "Testing Playwright MCP package..."
     try {
-        $mcpTest = npx @playwright/mcp@latest --help 2>&1
+        & npx --yes @playwright/mcp@latest --help 2>&1 | Out-Null
         if ($LASTEXITCODE -eq 0) {
             Write-Log "Playwright MCP package is accessible" "SUCCESS"
         }
