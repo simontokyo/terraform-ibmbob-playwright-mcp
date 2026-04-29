@@ -32,11 +32,26 @@ detect_os() {
 install_nvm() {
     log "INFO" "Installing nvm (Node Version Manager) $NVM_VERSION..."
     
-    # Download and install nvm
-    if curl -o- "https://raw.githubusercontent.com/nvm-sh/nvm/$NVM_VERSION/install.sh" | bash; then
-        log "SUCCESS" "nvm installed successfully"
+    # Check if curl or wget is available
+    local download_cmd=""
+    if command -v curl &> /dev/null; then
+        download_cmd="curl -o-"
+    elif command -v wget &> /dev/null; then
+        download_cmd="wget -qO-"
     else
-        log "ERROR" "Failed to install nvm"
+        log "ERROR" "Neither curl nor wget is installed. Please install one of them first:"
+        log "ERROR" "  Ubuntu/Debian: sudo apt-get install curl"
+        log "ERROR" "  CentOS/RHEL: sudo yum install curl"
+        log "ERROR" "  macOS: curl should be pre-installed"
+        return 1
+    fi
+    
+    # Download and install nvm
+    log "INFO" "Downloading nvm using $download_cmd..."
+    if $download_cmd "https://raw.githubusercontent.com/nvm-sh/nvm/$NVM_VERSION/install.sh" | bash; then
+        log "INFO" "nvm download and installation script completed"
+    else
+        log "ERROR" "Failed to download or install nvm"
         return 1
     fi
     
@@ -45,7 +60,14 @@ install_nvm() {
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
     
-    return 0
+    # Verify nvm is now available
+    if command -v nvm &> /dev/null; then
+        log "SUCCESS" "nvm installed successfully"
+        return 0
+    else
+        log "ERROR" "nvm installation completed but command not found"
+        return 1
+    fi
 }
 
 check_nvm_installed() {
