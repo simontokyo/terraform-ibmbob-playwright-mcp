@@ -75,7 +75,7 @@ resource "null_resource" "verify_nodejs" {
 
   provisioner "local-exec" {
     command = local.is_windows ? (
-      "node --version; if ($LASTEXITCODE -ne 0) { exit 1 }"
+      "$env:Path = [System.Environment]::GetEnvironmentVariable('Path','Machine') + ';' + [System.Environment]::GetEnvironmentVariable('Path','User'); node --version; if ($LASTEXITCODE -ne 0) { exit 1 }"
     ) : (
       "node --version || exit 1"
     )
