@@ -63,7 +63,7 @@ flowchart TD
     CheckConfig -->|Yes| MergeConfig[Merge with Existing]
     CheckConfig -->|No| CreateConfig[Create New Config]
     
-    MergeConfig --> DeployConfig[Deploy to Roo Code Settings]
+    MergeConfig --> DeployConfig[Deploy to IBM Bob Settings]
     CreateConfig --> DeployConfig
     
     DeployConfig --> SetPermissions[Set File Permissions]
@@ -152,8 +152,8 @@ graph LR
     end
     
     subgraph Target System
-        RooSettings[Roo Code Settings Directory]
-        MCPConfig[cline_mcp_settings.json]
+        BobSettings[IBM Bob Settings Directory]
+        MCPConfig[mcp_settings.json]
     end
     
     Main --> Vars
@@ -170,7 +170,7 @@ graph LR
     
     Main --> MCPTpl
     MCPTpl --> MCPConfig
-    MCPConfig --> RooSettings
+    MCPConfig --> BobSettings
 ```
 
 ## OS-Specific Configuration Paths

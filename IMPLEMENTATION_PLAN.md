@@ -15,7 +15,7 @@ This plan outlines the creation of a Terraform HCL script to automate Playwright
    ├─ If missing → Install Chrome via npx
    └─ If present → Skip
 4. Configure MCP JSON
-   └─ Deploy to Roo Code settings directory
+   └─ Deploy to IBM Bob settings directory
 ```
 
 ### File Structure
@@ -217,7 +217,7 @@ resource "local_file" "mcp_config" {
 - ✅ Terraform script runs successfully on all three platforms
 - ✅ Node.js v24.15.0 is installed (or skipped if present)
 - ✅ Playwright Chrome browser is installed
-- ✅ MCP configuration is correctly deployed to Roo Code settings
+- ✅ MCP configuration is correctly deployed to IBM Bob settings
 - ✅ Script is idempotent (can be run multiple times safely)
 - ✅ Clear error messages for any failures
 - ✅ Comprehensive documentation provided
