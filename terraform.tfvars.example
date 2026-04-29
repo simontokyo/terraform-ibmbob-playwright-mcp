@@ -1,0 +1,40 @@
+# Example Terraform Variables Configuration
+# Copy this file to terraform.tfvars and customize as needed
+
+# Minimum Node.js version required (must be 18 or newer)
+# nodejs_min_version = "18.0.0"
+
+# Skip Node.js installation even if not found or version is too old
+# skip_nodejs_install = false
+
+# Skip Playwright browser installation
+# skip_playwright_install = false
+
+# Name of the MCP server in configuration
+# mcp_server_name = "playwright"
+
+# Force reinstallation of Node.js and Playwright even if already installed
+# force_reinstall = false
+
+# Playwright browser to install (locked to chrome only)
+# playwright_browsers = "chrome"
+
+# Custom path to IBM Bob configuration directory (leave empty for auto-detection)
+# bob_config_path = ""
+
+# Custom Node.js download URL (leave empty for default nodejs.org)
+# nodejs_download_url = ""
+
+# Enable verbose output for installation scripts
+# verbose_output = true
+
+# Example: Enable verbose output
+# verbose_output = true
+
+# Example: Force reinstall everything
+# force_reinstall = true
+# nodejs_min_version = "20.0.0"
+
+# Example: Skip installations (useful for testing configuration only)
+# skip_nodejs_install = true
+# skip_playwright_install = true
