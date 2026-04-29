@@ -1,14 +1,12 @@
 # Terraform IBM Bob Playwright MCP Automation
 
-[![Terraform](https://img.shields.io/badge/Terraform-1.0+-623CE4?logo=terraform)](https://www.terraform.io/)
+[![Terraform](https://img.shields.io/badge/Terraform-1.14.9-623CE4?logo=terraform)](https://www.terraform.io/)
 [![Node.js](https://img.shields.io/badge/Node.js-v24.15.0-339933?logo=node.js)](https://nodejs.org/)
 [![Playwright](https://img.shields.io/badge/Playwright-Chrome-2EAD33?logo=playwright)](https://playwright.dev/)
 [![IBM Bob](https://img.shields.io/badge/IBM-Bob_IDE-0530AD?logo=ibm)](https://ibm.com)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 Automate the installation and configuration of Playwright MCP for **IBM Bob IDE** on Windows, macOS, and Ubuntu using Terraform.
-
-**Repository:** `terraform-ibmbob-playwright-mcp`
 
 ## Overview
 
