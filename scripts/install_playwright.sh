@@ -31,14 +31,19 @@ test_playwright_installed() {
 main() {
     log "INFO" "Starting Playwright browser installation..."
     
+    # Load nvm if available (needed when Node.js was installed via nvm)
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+    
     # Verify Node.js and npm are available
     if ! command -v node &> /dev/null; then
-        log "ERROR" "Node.js not found. Please install Node.js first."
+        log "ERROR" "Node.js not found. Please install Node.js first or restart your terminal."
         exit 1
     fi
     
     if ! command -v npm &> /dev/null; then
-        log "ERROR" "npm not found. Please install Node.js first."
+        log "ERROR" "npm not found. Please install Node.js first or restart your terminal."
         exit 1
     fi
     
