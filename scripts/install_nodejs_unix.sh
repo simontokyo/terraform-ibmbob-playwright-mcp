@@ -111,8 +111,17 @@ main() {
     if [ "$FORCE_REINSTALL" != "true" ]; then
         if command -v node &> /dev/null; then
             local current_version=$(node --version)
-            log "INFO" "Node.js $current_version is already installed. Use force_reinstall=true to reinstall."
-            exit 0
+            log "INFO" "Node.js $current_version is already installed."
+            
+            # Verify it meets minimum version requirement
+            local min_ver="${NODEJS_VERSION}"
+            if [[ "$current_version" == v${min_ver}.* ]] || [[ "$current_version" == v24.* ]]; then
+                log "SUCCESS" "Node.js version $current_version is acceptable. Use force_reinstall=true to reinstall."
+                exit 0
+            else
+                log "WARN" "Node.js version $current_version does not match expected v${min_ver}.x"
+                log "INFO" "Proceeding with installation..."
+            fi
         fi
     fi
     

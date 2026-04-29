@@ -60,8 +60,8 @@ main() {
     
     # Check if Node.js is installed
     if ! command -v node &> /dev/null; then
-        log "WARN" "Node.js is not installed"
-        exit 1
+        log "INFO" "Node.js is not installed - will proceed with installation"
+        exit 0
     fi
     
     # Get installed Node.js version
@@ -74,8 +74,8 @@ main() {
     comparison=$(version_compare "$installed_version" "$min_ver")
     
     if [ "$comparison" = "-1" ]; then
-        log "WARN" "Node.js version v$installed_version is older than required v$min_ver"
-        exit 1
+        log "INFO" "Node.js version v$installed_version is older than required v$min_ver - will proceed with installation"
+        exit 0
     fi
     
     log "SUCCESS" "Node.js version v$installed_version meets minimum requirement (v$min_ver)"

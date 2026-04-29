@@ -79,7 +79,8 @@ resource "null_resource" "verify_nodejs" {
     command = local.is_windows ? (
       "$nodePaths = @('C:\\Program Files\\nodejs\\node.exe', 'C:\\Program Files (x86)\\nodejs\\node.exe', \"$env:ProgramData\\chocolatey\\bin\\node.exe\"); $nodeFound = $false; foreach ($path in $nodePaths) { if (Test-Path $path) { $version = & $path --version; Write-Host \"Node.js found at $path : $version\"; $nodeFound = $true; break } }; if (-not $nodeFound) { $env:Path = [System.Environment]::GetEnvironmentVariable('Path','Machine') + ';' + [System.Environment]::GetEnvironmentVariable('Path','User'); try { $version = node --version; Write-Host \"Node.js found in PATH: $version\"; $nodeFound = $true } catch { } }; if (-not $nodeFound) { Write-Error 'Node.js not found. Please restart your terminal or system.'; exit 1 }"
     ) : (
-      "node --version || exit 1"
+      # Check common Node.js installation paths on Unix systems
+      "if command -v node >/dev/null 2>&1; then echo \"Node.js found: $(node --version)\"; exit 0; fi; export NVM_DIR=\"$HOME/.nvm\"; [ -s \"$NVM_DIR/nvm.sh\" ] && . \"$NVM_DIR/nvm.sh\"; if command -v node >/dev/null 2>&1; then echo \"Node.js found via nvm: $(node --version)\"; exit 0; fi; if [ -f /usr/local/bin/node ]; then echo \"Node.js found at /usr/local/bin/node: $(/usr/local/bin/node --version)\"; exit 0; fi; if [ -f /opt/homebrew/bin/node ]; then echo \"Node.js found at /opt/homebrew/bin/node: $(/opt/homebrew/bin/node --version)\"; exit 0; fi; echo 'Node.js not found. Please restart your terminal or run: source ~/.bashrc (or ~/.zshrc)' >&2; exit 1"
     )
     interpreter = local.is_windows ? ["PowerShell", "-Command"] : ["/bin/bash", "-c"]
   }

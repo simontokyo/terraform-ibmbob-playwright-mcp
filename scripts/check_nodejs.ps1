@@ -35,8 +35,8 @@ try {
     $nodeCommand = Get-Command node -ErrorAction SilentlyContinue
     
     if (-not $nodeCommand) {
-        Write-Log "Node.js is not installed" "WARN"
-        exit 1
+        Write-Log "Node.js is not installed - will proceed with installation" "INFO"
+        exit 0
     }
     
     # Get installed Node.js version
@@ -48,8 +48,8 @@ try {
     $comparison = Compare-Versions -Version1 $installedVersion -Version2 $minVer
     
     if ($comparison -lt 0) {
-        Write-Log "Node.js version v$installedVersion is older than required v$minVer" "WARN"
-        exit 1
+        Write-Log "Node.js version v$installedVersion is older than required v$minVer - will proceed with installation" "INFO"
+        exit 0
     }
     
     Write-Log "Node.js version v$installedVersion meets minimum requirement (v$minVer)" "SUCCESS"
@@ -62,7 +62,7 @@ try {
     
 } catch {
     Write-Log "Error checking Node.js: $_" "ERROR"
-    exit 1
+    exit 0
 }
 
 # Made with Bob

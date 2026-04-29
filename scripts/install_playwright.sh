@@ -48,11 +48,11 @@ main() {
     
     log "INFO" "Installing Playwright browser(s): $BROWSERS"
     
-    # Check if already installed
+    # Check if already installed (but always attempt installation to ensure it's complete)
     if [ "$FORCE_REINSTALL" != "true" ]; then
         if test_playwright_installed "$BROWSERS"; then
-            log "INFO" "Playwright browser '$BROWSERS' is already installed. Use force_reinstall=true to reinstall."
-            exit 0
+            log "INFO" "Playwright browser '$BROWSERS' appears to be installed."
+            log "INFO" "Running installation to verify/update..."
         fi
     fi
     
