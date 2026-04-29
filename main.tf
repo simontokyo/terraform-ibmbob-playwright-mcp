@@ -75,7 +75,7 @@ resource "null_resource" "verify_nodejs" {
 
   provisioner "local-exec" {
     command = local.is_windows ? (
-      "$env:Path = [System.Environment]::GetEnvironmentVariable('Path','Machine') + ';' + [System.Environment]::GetEnvironmentVariable('Path','User'); node --version; if ($LASTEXITCODE -ne 0) { exit 1 }"
+      "$nodePaths = @('C:\\Program Files\\nodejs\\node.exe', 'C:\\Program Files (x86)\\nodejs\\node.exe', \"$env:ProgramData\\chocolatey\\bin\\node.exe\"); $nodeFound = $false; foreach ($path in $nodePaths) { if (Test-Path $path) { $version = & $path --version; Write-Host \"Node.js found at $path : $version\"; $nodeFound = $true; break } }; if (-not $nodeFound) { $env:Path = [System.Environment]::GetEnvironmentVariable('Path','Machine') + ';' + [System.Environment]::GetEnvironmentVariable('Path','User'); try { $version = node --version; Write-Host \"Node.js found in PATH: $version\"; $nodeFound = $true } catch { } }; if (-not $nodeFound) { Write-Error 'Node.js not found. Please restart your terminal or system.'; exit 1 }"
     ) : (
       "node --version || exit 1"
     )
