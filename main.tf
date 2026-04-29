@@ -53,6 +53,8 @@ resource "null_resource" "install_nodejs" {
   triggers = {
     force_reinstall = var.force_reinstall
     script_hash     = filemd5(local.nodejs_install_script)
+    # Always check if Node.js exists to ensure installation
+    always_check    = timestamp()
   }
 
   provisioner "local-exec" {
