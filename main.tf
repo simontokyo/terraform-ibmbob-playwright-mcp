@@ -95,6 +95,8 @@ resource "null_resource" "install_playwright" {
     force_reinstall = var.force_reinstall
     browsers        = var.playwright_browsers
     script_hash     = filemd5(local.playwright_install_script)
+    # Always check if Playwright is installed to ensure installation
+    always_check    = timestamp()
   }
 
   provisioner "local-exec" {
