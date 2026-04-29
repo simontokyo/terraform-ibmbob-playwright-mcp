@@ -93,8 +93,14 @@ mcp_server_name = "playwright"
 # Force reinstallation (default: false)
 force_reinstall = false
 
-# Playwright browser to install (locked to chrome only)
+# Playwright browser (locked to chrome only, default: "chrome")
 playwright_browsers = "chrome"
+
+# Custom IBM Bob configuration path (default: "" for auto-detection)
+bob_config_path = ""
+
+# Custom Node.js download URL (default: "" for default sources)
+nodejs_download_url = ""
 
 # Enable verbose output (default: true)
 verbose_output = true
@@ -105,7 +111,7 @@ verbose_output = true
 You can also pass variables via command line:
 
 ```bash
-terraform apply -var="playwright_browsers=all" -var="force_reinstall=true"
+terraform apply -var="force_reinstall=true" -var="verbose_output=false"
 ```
 
 ## Usage Examples
