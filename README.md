@@ -42,11 +42,9 @@ This Terraform configuration automates the following tasks:
 ### 1. Clone or Download This Repository
 
 ```bash
-git clone https://github.com/<username>/terraform-ibmbob-playwright-mcp.git
+git clone https://github.com/simontokyo/terraform-ibmbob-playwright-mcp.git
 cd terraform-ibmbob-playwright-mcp
 ```
-
-Or download and extract the ZIP file from the [releases page](https://github.com/<username>/terraform-ibmbob-playwright-mcp/releases).
 
 ### 2. Initialize Terraform
 
